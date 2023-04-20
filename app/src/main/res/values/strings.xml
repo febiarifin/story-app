@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">StoryApp</string>
+    <string name="not_found">STORY NOT FOUND</string>
+    <string name="close_camera">Close Camera</string>
+    <string name="take_a_photo">Take a Photo</string>
+    <string name="flip_to_front_camera">Switch Camera</string>
+    <string name="pick_gallery">Pick Gallery</string>
+    <string name="close_upload_page">Close Upload</string>
+    <string name="upload_your_story">Upload Your Story</string>
+    <string name="add_description">Add Description Story</string>
+    <string name="setting">"Setting "</string>
+    <string name="logout">Logout</string>
+</resources>
