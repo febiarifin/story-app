@@ -8,9 +8,12 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="black_night">#000</color>
+    <color name="black_night_700">#212121</color>
 
     <color name="my_color_dark">#14213D</color>
     <color name="my_color_yellow">#FCA311</color>
+    <color name="my_color_red">#F44336</color>
+    <color name="my_color_white_100">#1EFFFFFF</color>
 
     <color name="my_color_dark_100">#28000000</color>
     <color name="my_color_dark_700">#60000000</color>

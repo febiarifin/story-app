@@ -15,17 +15,22 @@
         tools:src="@tools:sample/avatars"
         android:transitionName="image"/>
 
-    <TextView
+    <kr.co.prnd.readmore.ReadMoreTextView
         android:id="@+id/tv_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:background="@drawable/bg_tv_story_description"
-        android:textColor="@color/white"
+        android:lineSpacingMultiplier="1.2"
         android:textAlignment="center"
-        tools:text="Description"
-        android:padding="16dp"
-        android:transitionName="description"/>
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_photo"
+        app:readMoreMaxLine="3"
+        app:readMoreText="@string/read_more_text"
+        tools:text="@tools:sample/lorem"
+        app:readMoreColor="@color/my_color_yellow"
+        android:padding="16dp"/>
+
 
     <ProgressBar
         android:id="@+id/progressbar"

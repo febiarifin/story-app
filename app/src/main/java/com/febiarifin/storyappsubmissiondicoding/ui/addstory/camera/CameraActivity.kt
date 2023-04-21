@@ -13,7 +13,6 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import com.febiarifin.storyappsubmissiondicoding.databinding.ActivityCameraBinding
 import com.febiarifin.storyappsubmissiondicoding.ui.addstory.upload.UploadActivity
-import com.febiarifin.storyappsubmissiondicoding.ui.main.MainActivity
 import com.febiarifin.storyappsubmissiondicoding.utils.createFile
 
 class CameraActivity : AppCompatActivity() {

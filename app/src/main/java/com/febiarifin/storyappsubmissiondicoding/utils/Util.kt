@@ -3,12 +3,10 @@ package com.febiarifin.storyappsubmissiondicoding.utils
 import android.app.Application
 import android.content.ContentResolver
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Matrix
 import android.net.Uri
 import android.os.Environment
 import com.febiarifin.storyappsubmissiondicoding.R
+import com.febiarifin.storyappsubmissiondicoding.data.model.Login
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
@@ -40,34 +38,6 @@ fun createFile(application: Application): File {
     return File(outputDirectory, "$timeStamp.jpg")
 }
 
-fun rotateBitmap(bitmap: Bitmap, isBackCamera: Boolean = false): Bitmap {
-    val matrix = Matrix()
-    return if (isBackCamera) {
-        matrix.postRotate(90f)
-        Bitmap.createBitmap(
-            bitmap,
-            0,
-            0,
-            bitmap.width,
-            bitmap.height,
-            matrix,
-            true
-        )
-    } else {
-        matrix.postRotate(-90f)
-        matrix.postScale(-1f, 1f, bitmap.width / 2f, bitmap.height / 2f)
-        Bitmap.createBitmap(
-            bitmap,
-            0,
-            0,
-            bitmap.width,
-            bitmap.height,
-            matrix,
-            true
-        )
-    }
-}
-
 fun uriToFile(selectedImg: Uri, context: Context): File {
     val contentResolver: ContentResolver = context.contentResolver
     val myFile = createCustomTempFile(context)
@@ -83,14 +53,29 @@ fun uriToFile(selectedImg: Uri, context: Context): File {
     return myFile
 }
 
-fun rotateFile(file: File, isBackCamera: Boolean = false) {
-    val matrix = Matrix()
-    val bitmap = BitmapFactory.decodeFile(file.path)
-    val rotation = if (isBackCamera) 0f else -0f
-    matrix.postRotate(rotation)
-    if (!isBackCamera) {
-        matrix.postScale(-1f, 1f, bitmap.width / 2f, bitmap.height / 2f)
+fun String?.getTimeAgoFormat(): String {
+    if (this.isNullOrEmpty()) return "Unknown"
+
+    val format = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+    val sdf = SimpleDateFormat(format, Locale.getDefault()).apply {
+        timeZone = TimeZone.getTimeZone("GMT")
     }
-    val result = Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
-    result.compress(Bitmap.CompressFormat.JPEG, 100, FileOutputStream(file))
+
+    val pastTime = sdf.parse(this)?.time ?: return "Unknown"
+    val diff = System.currentTimeMillis() - pastTime
+
+    val oneMin = 60_000L
+    val oneHour = 60 * oneMin
+    val oneDay = 24 * oneHour
+    val oneMonth = 30 * oneDay
+    val oneYear = 365 * oneDay
+
+    return when {
+        diff >= oneYear -> "${diff / oneYear} years ago"
+        diff >= oneMonth -> "${diff / oneMonth} months ago"
+        diff >= oneDay -> "${diff / oneDay} days ago"
+        diff >= oneHour -> "${diff / oneHour} hours ago"
+        diff >= oneMin -> "${diff / oneMin} min ago"
+        else -> "Just now"
+    }
 }

@@ -29,7 +29,7 @@ class DetailActivity : AppCompatActivity() {
         val created_at = intent.getStringExtra(EXTRA_CREATED_AT)
 
         viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(DetailViewModel::class.java)
-        viewModel.setStoryDetail(id.toString())
+        viewModel.setStoryDetail(this, id.toString())
         viewModel.getStoryDetail().observe(this, {
             if (it != null){
                 binding.apply {

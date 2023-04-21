@@ -8,6 +8,19 @@
     <string name="close_upload_page">Close Upload</string>
     <string name="upload_your_story">Upload Your Story</string>
     <string name="add_description">Add Description Story</string>
-    <string name="setting">"Setting "</string>
+    <string name="setting">"Setting"</string>
     <string name="logout">Logout</string>
+    <string name="read_more_text">...Read more</string>
+    <string name="email_hint">Input Your Email</string>
+    <string name="email_error">Email has required</string>
+    <string name="password_hint">Input Your Password</string>
+    <string name="password_error">Wrong password</string>
+    <string name="password_confirmation_hint">Confirm Your Password</string>
+    <string name="name">Name</string>
+    <string name="name_error">Wrong Name</string>
+    <string name="login_intro">Post your random activity in Story App!</string>
+    <string name="login_title">Hello Welcome</string>
+    <string name="form_error">Failed credentials</string>
+    <string name="register_question">Don\'t have an account?</string>
+    <string name="register">Register</string>
 </resources>

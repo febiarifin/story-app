@@ -1,5 +1,6 @@
 package com.febiarifin.storyappsubmissiondicoding.ui.detail
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -23,9 +24,9 @@ class DetailViewModel: ViewModel() {
     private val _message = MutableLiveData<String>()
     val message: LiveData<String> = _message
 
-    fun setStoryDetail(id: String){
+    fun setStoryDetail(context: Context,id: String){
         _isLoading.value = true
-        val client = ApiConfig.getApiService().getStoryDetail(id)
+        val client = ApiConfig.getApiService(context).getStoryDetail(id)
         client.enqueue(object : Callback<DetailStoryResponse> {
             override fun onResponse(call: Call<DetailStoryResponse>, response: Response<DetailStoryResponse>) {
                 if (response.isSuccessful){

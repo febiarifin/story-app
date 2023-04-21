@@ -16,25 +16,32 @@ import com.febiarifin.storyappsubmissiondicoding.data.model.Story
 import com.febiarifin.storyappsubmissiondicoding.databinding.ActivityMainBinding
 import com.febiarifin.storyappsubmissiondicoding.ui.adapter.StoryAdapter
 import com.febiarifin.storyappsubmissiondicoding.ui.addstory.upload.UploadActivity
+import com.febiarifin.storyappsubmissiondicoding.ui.auth.login.LoginActivity
 import com.febiarifin.storyappsubmissiondicoding.ui.detail.DetailActivity
+import com.febiarifin.storyappsubmissiondicoding.utils.UserPreference
+import com.febiarifin.storyappsubmissiondicoding.utils.getTimeAgoFormat
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: StoryAdapter
     private lateinit var viewModel: MainViewModel
+    private lateinit var userPreference: UserPreference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        userPreference = UserPreference(this)
+        checkIsLogin()
+
         adapter = StoryAdapter()
         adapter.notifyDataSetChanged()
         viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(MainViewModel::class.java)
 
         binding.swipeRefresh.setOnRefreshListener {
-            viewModel.setStories()
+            viewModel.setStories(this)
         }
 
         binding.apply {
@@ -51,7 +58,7 @@ class MainActivity : AppCompatActivity() {
             finish()
         }
 
-        viewModel.setStories()
+        viewModel.setStories(this)
 
         viewModel.getStories().observe(this,{
             if (it != null){
@@ -76,11 +83,20 @@ class MainActivity : AppCompatActivity() {
                 Intent(this@MainActivity, DetailActivity::class.java).also {
                     it.putExtra(DetailActivity.EXTRA_ID, data.id)
                     it.putExtra(DetailActivity.EXTRA_NAME, data.name)
-                    it.putExtra(DetailActivity.EXTRA_CREATED_AT, data.createdAt)
+                    it.putExtra(DetailActivity.EXTRA_CREATED_AT, data.createdAt.getTimeAgoFormat())
                     startActivity(it, ActivityOptionsCompat.makeSceneTransitionAnimation(this@MainActivity as Activity).toBundle())
                 }
             }
         })
+    }
+
+    private fun checkIsLogin() {
+        if (userPreference.getUserToken() == null){
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+        }
+        val actionBar= supportActionBar
+        actionBar!!.subtitle = "Hai! "+ userPreference.getUserName()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -91,7 +107,9 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.logout -> {
-
+                userPreference.clearPreference()
+                startActivity(Intent(this,LoginActivity::class.java))
+                finish()
             }
         }
         return super.onOptionsItemSelected(item)

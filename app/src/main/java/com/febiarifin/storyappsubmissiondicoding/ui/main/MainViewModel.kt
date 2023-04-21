@@ -1,5 +1,6 @@
 package com.febiarifin.storyappsubmissiondicoding.ui.main
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -27,9 +28,9 @@ class MainViewModel: ViewModel() {
     private val _isError = MutableLiveData<Boolean>()
     val isError: LiveData<Boolean> = _isError
 
-    fun setStories() {
+    fun setStories(context: Context) {
         _isLoading.value = true
-        val client = ApiConfig.getApiService().getStories()
+        val client = ApiConfig.getApiService(context).getStories()
         client.enqueue(object : Callback<StoryResponse> {
             override fun onResponse(
                 call: Call<StoryResponse>,
