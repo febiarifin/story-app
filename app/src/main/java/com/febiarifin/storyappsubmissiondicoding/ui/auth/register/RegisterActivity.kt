@@ -3,6 +3,8 @@ package com.febiarifin.storyappsubmissiondicoding.ui.auth.register
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.widget.Toast
 import androidx.core.text.bold
@@ -61,6 +63,20 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun setUpView() {
         binding?.apply {
+            edRegisterPasswordConfirm.addTextChangedListener(object : TextWatcher{
+                override fun afterTextChanged(s: Editable?) {
+                }
+
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    if (s.toString() != edRegisterPassword.text.toString()){
+                        edRegisterPasswordConfirm.setError(resources.getString(R.string.password_must_same))
+                    }
+                }
+            })
+
             val signInText = buildSpannedString {
                 append(getString(R.string.sign_in_question)).bold {
                     append(getString(R.string.sign_in))

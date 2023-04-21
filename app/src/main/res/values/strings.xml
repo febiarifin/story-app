@@ -26,4 +26,5 @@
     <string name="register_intro">Let\'s join and see random story</string>
     <string name="sign_in_question">Already have an account?</string>
     <string name="sign_in">Sign In</string>
+    <string name="password_must_same">Password must same</string>
 </resources>

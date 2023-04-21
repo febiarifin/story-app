@@ -84,7 +84,10 @@
         app:layout_constraintEnd_toEndOf="@id/ed_register_password_confirm"
         app:layout_constraintStart_toStartOf="@id/ed_register_password_confirm"
         app:layout_constraintTop_toBottomOf="@id/ed_register_password_confirm"
-        tools:text="Already have an account? Sign In" />
+        tools:text="Already have an account? Sign In"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"/>
 
     <com.febiarifin.storyappsubmissiondicoding.ui.customviews.MyButton
         android:id="@+id/btn_register"
