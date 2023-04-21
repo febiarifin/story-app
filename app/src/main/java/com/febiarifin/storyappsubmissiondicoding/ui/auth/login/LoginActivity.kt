@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.febiarifin.storyappsubmissiondicoding.R
 import com.febiarifin.storyappsubmissiondicoding.data.model.Login
 import com.febiarifin.storyappsubmissiondicoding.databinding.ActivityLoginBinding
+import com.febiarifin.storyappsubmissiondicoding.ui.auth.register.RegisterActivity
 import com.febiarifin.storyappsubmissiondicoding.ui.main.MainActivity
 import com.febiarifin.storyappsubmissiondicoding.utils.UserPreference
 import com.google.android.material.snackbar.Snackbar
@@ -35,7 +36,14 @@ class LoginActivity : AppCompatActivity() {
 
         binding.btnSignIn.buttonEnabled("Sign In", 14f)
         binding.btnSignIn.setOnClickListener {
-            setUpView()
+            if (!isFormValid()) {
+                showSnackBar(getString(R.string.form_error))
+                return@setOnClickListener
+            }
+
+            val email = binding.edLoginEmail.text.toString()
+            val password = binding.edLoginPassword.text.toString()
+            viewModel.login(this@LoginActivity,email, password)
         }
 
         viewModel.isLoading.observe(this,{
@@ -55,26 +63,15 @@ class LoginActivity : AppCompatActivity() {
 
     private fun setUpView() {
         binding?.apply {
-            btnSignIn.setOnClickListener {
-                if (!isFormValid()) {
-                    showSnackBar(getString(R.string.form_error))
-                    return@setOnClickListener
-                }
-
-                val email = edLoginEmail.text.toString()
-                val password = edLoginPassword.text.toString()
-                viewModel.login(this@LoginActivity,email, password)
-            }
-
             val registerText = buildSpannedString {
                 append(getString(R.string.register_question)).bold {
                     append(getString(R.string.register))
                 }
             }
-
             tvRegister.text = registerText
             tvRegister.setOnClickListener{
-
+                startActivity(Intent(this@LoginActivity, RegisterActivity::class.java))
+                finish()
             }
         }
     }

@@ -20,7 +20,10 @@
     <string name="name_error">Wrong Name</string>
     <string name="login_intro">Post your random activity in Story App!</string>
     <string name="login_title">Hello Welcome</string>
-    <string name="form_error">Failed credentials</string>
+    <string name="form_error">Please complete your form</string>
     <string name="register_question">Don\'t have an account?</string>
     <string name="register">Register</string>
+    <string name="register_intro">Let\'s join and see random story</string>
+    <string name="sign_in_question">Already have an account?</string>
+    <string name="sign_in">Sign In</string>
 </resources>

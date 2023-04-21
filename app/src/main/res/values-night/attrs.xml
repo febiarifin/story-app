@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="SnapEditText">3</declare-styleable>
+    <declare-styleable name="MyEditText">3</declare-styleable>
 </resources>

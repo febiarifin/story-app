@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="SnapProgressButton">
+    <declare-styleable name="MyProgressButton">
         <attr name="text" format="string" />
         <attr name="enabled" format="boolean" />
         <attr name="backgroundColor" format="color" />
@@ -11,7 +11,7 @@
         </attr>
     </declare-styleable>
 
-    <declare-styleable name="SnapEditText">
+    <declare-styleable name="MyEditText">
         <attr name="custom_type" format="enum">
             <enum name="email" value="0" />
             <enum name="password" value="1" />

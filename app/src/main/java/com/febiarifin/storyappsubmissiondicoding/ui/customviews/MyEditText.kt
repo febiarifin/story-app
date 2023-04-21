@@ -20,14 +20,14 @@ class MyEditText : AppCompatEditText, View.OnTouchListener {
     private var showPasswordIconDrawable: Drawable? = null
     private var hidePasswordIconDrawable: Drawable? = null
 
-    private lateinit var backgroundDrawable: Drawable
+    private lateinit var backgroundDrawableIcon: Drawable
     private lateinit var backgroundErrorDrawable: Drawable
     private var backgroundCorrectDrawable: Drawable? = null
 
     private var minimumPasswordLength = 8
     private var etHint: String = ""
     private var isPasswordShown = false
-    private var snapInputType = SnapInputType.PASSWORD
+    private var snapInputType = MyInputType.PASSWORD
 
     constructor(context: Context) : super(context) {
         init()
@@ -49,13 +49,13 @@ class MyEditText : AppCompatEditText, View.OnTouchListener {
             left = startIconDrawable,
             right = if (isPasswordShown) showPasswordIconDrawable else hidePasswordIconDrawable
         )
-        background = if (error.isNullOrEmpty()) backgroundCorrectDrawable ?: backgroundDrawable else backgroundErrorDrawable
+        background = if (error.isNullOrEmpty()) backgroundCorrectDrawable ?: backgroundDrawableIcon else backgroundErrorDrawable
         hint = etHint
     }
 
     private fun init() {
         when (snapInputType) {
-            SnapInputType.EMAIL -> {
+            MyInputType.EMAIL -> {
                 inputType = INPUT_TYPE_EMAIL
                 etHint = resources.getString(R.string.email_hint)
 
@@ -66,7 +66,7 @@ class MyEditText : AppCompatEditText, View.OnTouchListener {
                     backgroundCorrectDrawable = ContextCompat.getDrawable(context, R.drawable.bg_edit_text_correct)
                 })
             }
-            SnapInputType.PASSWORD -> {
+            MyInputType.PASSWORD -> {
                 inputType = INPUT_TYPE_PASSWORD
                 etHint = resources.getString(R.string.password_hint)
 
@@ -81,7 +81,7 @@ class MyEditText : AppCompatEditText, View.OnTouchListener {
 
                 setOnTouchListener(this)
             }
-            SnapInputType.PASSWORD_CONFIRMATION -> {
+            MyInputType.PASSWORD_CONFIRMATION -> {
                 inputType = INPUT_TYPE_PASSWORD
                 etHint = resources.getString(R.string.password_confirmation_hint)
 
@@ -96,11 +96,11 @@ class MyEditText : AppCompatEditText, View.OnTouchListener {
 
                 setOnTouchListener(this)
             }
-            SnapInputType.NAME -> {
+            MyInputType.NAME -> {
                 inputType = INPUT_TYPE_TEXT_NORMAL
                 etHint = resources.getString(R.string.name)
 
-                startIconDrawable = ContextCompat.getDrawable(context, R.drawable.ic_baseline_person_24)
+                startIconDrawable = ContextCompat.getDrawable(context, R.drawable.ic_baseline_person_24_yellow)
 
                 addTextChangedListener(onTextChanged = { name, _, _, _ ->
                     if (!isValidName(name)) setError(context.getString(R.string.name_error), null)
@@ -108,18 +108,18 @@ class MyEditText : AppCompatEditText, View.OnTouchListener {
                 })
             }
         }
-        backgroundDrawable = ContextCompat.getDrawable(context, R.drawable.bg_edit_text) as Drawable
+        backgroundDrawableIcon = ContextCompat.getDrawable(context, R.drawable.bg_edit_text) as Drawable
         backgroundErrorDrawable = ContextCompat.getDrawable(context, R.drawable.bg_edit_text_error) as Drawable
     }
 
     private fun getAttribute(attrs: AttributeSet?) {
-        val style = context.obtainStyledAttributes(attrs, R.styleable.SnapEditText)
-        minimumPasswordLength = style.getInt(R.styleable.SnapEditText_min_password_length, 8)
-        snapInputType = when (style.getIntOrThrow(R.styleable.SnapEditText_custom_type)) {
-            SnapInputType.PASSWORD.value -> SnapInputType.PASSWORD
-            SnapInputType.EMAIL.value -> SnapInputType.EMAIL
-            SnapInputType.PASSWORD_CONFIRMATION.value -> SnapInputType.PASSWORD_CONFIRMATION
-            SnapInputType.NAME.value -> SnapInputType.NAME
+        val style = context.obtainStyledAttributes(attrs, R.styleable.MyEditText)
+        minimumPasswordLength = style.getInt(R.styleable.MyEditText_min_password_length, 8)
+        snapInputType = when (style.getIntOrThrow(R.styleable.MyEditText_custom_type)) {
+            MyInputType.PASSWORD.value -> MyInputType.PASSWORD
+            MyInputType.EMAIL.value -> MyInputType.EMAIL
+            MyInputType.PASSWORD_CONFIRMATION.value -> MyInputType.PASSWORD_CONFIRMATION
+            MyInputType.NAME.value -> MyInputType.NAME
             else -> throw IllegalArgumentException("Invalid custom_type value")
         }
         style.recycle()
@@ -182,7 +182,7 @@ class MyEditText : AppCompatEditText, View.OnTouchListener {
         setSelection(text?.length ?: 0)
     }
 
-    enum class SnapInputType(val value: Int) {
+    enum class MyInputType(val value: Int) {
         EMAIL(0),
         PASSWORD(1),
         PASSWORD_CONFIRMATION(2),

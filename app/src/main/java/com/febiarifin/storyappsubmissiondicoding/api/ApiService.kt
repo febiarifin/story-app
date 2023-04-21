@@ -3,6 +3,7 @@ package com.febiarifin.storyappsubmissiondicoding.api
 import com.febiarifin.storyappsubmissiondicoding.data.StoryResponse
 import com.febiarifin.storyappsubmissiondicoding.data.response.DetailStoryResponse
 import com.febiarifin.storyappsubmissiondicoding.data.response.LoginResponse
+import com.febiarifin.storyappsubmissiondicoding.data.response.RegisterResponse
 import com.febiarifin.storyappsubmissiondicoding.data.response.StoryUploadResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -16,6 +17,14 @@ interface ApiService {
         @Field("email") email: String,
         @Field("password") password: String,
     ): Call<LoginResponse>
+
+    @FormUrlEncoded
+    @POST("register")
+    fun register(
+        @Field("name") name: String,
+        @Field("email") email: String,
+        @Field("password") password: String,
+    ): Call<RegisterResponse>
 
     @GET("stories")
     fun getStories(

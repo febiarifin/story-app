@@ -6,7 +6,6 @@ import android.content.Context
 import android.net.Uri
 import android.os.Environment
 import com.febiarifin.storyappsubmissiondicoding.R
-import com.febiarifin.storyappsubmissiondicoding.data.model.Login
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
