@@ -25,9 +25,6 @@ class MainViewModel: ViewModel() {
     private val _message = MutableLiveData<String>()
     val message: LiveData<String> = _message
 
-    private val _isError = MutableLiveData<Boolean>()
-    val isError: LiveData<Boolean> = _isError
-
     fun setStories(context: Context) {
         _isLoading.value = true
         val client = ApiConfig.getApiService(context).getStories()
@@ -37,14 +34,12 @@ class MainViewModel: ViewModel() {
                 response: Response<StoryResponse>
             ) {
                 if (response.isSuccessful){
-                    _isError.value = false
                     _isLoading.value = false
                     if (response != null){
                         listStories.postValue(response.body()?.listStories)
                     }
                 }else{
                     _isLoading.value = false
-                    _isError.value = true
                     _message.value = response.message()
                 }
             }

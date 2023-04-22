@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.Toast
 import androidx.core.app.ActivityOptionsCompat
 import androidx.lifecycle.ViewModelProvider
@@ -70,10 +69,6 @@ class MainActivity : AppCompatActivity() {
             binding.swipeRefresh.isRefreshing = it
         })
 
-        viewModel.isError.observe(this, {
-            showError(it)
-        })
-
         viewModel.message.observe(this,{
             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         })
@@ -114,6 +109,4 @@ class MainActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
-
-    private fun showError(isError: Boolean) = if (isError) binding.llError.visibility = View.VISIBLE else binding.llError.visibility = View.GONE
 }
