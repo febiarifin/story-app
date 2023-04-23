@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.febiarifin.storyappsubmissiondicoding.databinding.ActivityUploadBinding
 import com.febiarifin.storyappsubmissiondicoding.ui.addstory.camera.CameraActivity
 import com.febiarifin.storyappsubmissiondicoding.ui.main.MainActivity
+import com.febiarifin.storyappsubmissiondicoding.utils.rotateFile
 import com.febiarifin.storyappsubmissiondicoding.utils.uriToFile
 import java.io.File
 
@@ -151,6 +152,7 @@ class UploadActivity : AppCompatActivity() {
             } as? File
             val isBackCamera = it.data?.getBooleanExtra("isBackCamera", true) as Boolean
             myFile?.let { file ->
+                rotateFile(file, isBackCamera)
                 getFile = file
                 binding.ivStoryPreview.setImageBitmap(BitmapFactory.decodeFile(file.path))
                 viewModel.setImageFormCamera(getFile as File)
