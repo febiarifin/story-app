@@ -17,6 +17,7 @@ import com.febiarifin.storyappsubmissiondicoding.ui.adapter.StoryAdapter
 import com.febiarifin.storyappsubmissiondicoding.ui.addstory.upload.UploadActivity
 import com.febiarifin.storyappsubmissiondicoding.ui.auth.login.LoginActivity
 import com.febiarifin.storyappsubmissiondicoding.ui.detail.DetailActivity
+import com.febiarifin.storyappsubmissiondicoding.ui.maps.MapsActivity
 import com.febiarifin.storyappsubmissiondicoding.utils.UserPreference
 import com.febiarifin.storyappsubmissiondicoding.utils.getTimeAgoFormat
 
@@ -47,7 +48,6 @@ class MainActivity : AppCompatActivity() {
             rvStory.layoutManager = LinearLayoutManager(this@MainActivity)
             rvStory.setHasFixedSize(true)
             rvStory.adapter = adapter
-
         }
 
         binding.btnAddStory.buttonEnabled("+", 24f)
@@ -106,7 +106,15 @@ class MainActivity : AppCompatActivity() {
                 startActivity(Intent(this,LoginActivity::class.java))
                 finish()
             }
+            R.id.maps -> {
+                startActivity(Intent(this, MapsActivity::class.java))
+            }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.setStories(this)
     }
 }
