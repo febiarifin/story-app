@@ -2,6 +2,7 @@ package com.febiarifin.storyappsubmissiondicoding.data.response
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "story")
 data class StoryResponseItem(

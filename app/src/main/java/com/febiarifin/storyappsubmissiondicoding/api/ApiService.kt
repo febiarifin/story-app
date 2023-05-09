@@ -43,9 +43,9 @@ interface ApiService {
     ): Call<StoryUploadResponse>
 
     @GET("stories")
-    fun getStoriesWithPagination(
+    suspend fun getStoriesWithPagination(
         @Query("page") page: Int? = null,
         @Query("size") size: Int? = null,
         @Query("location") location: Int = 0,
-    ): List<StoryResponseItem>
+    ): StoryResponse
 }

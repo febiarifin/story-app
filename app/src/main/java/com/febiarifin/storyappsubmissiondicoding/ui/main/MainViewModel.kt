@@ -17,10 +17,10 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainViewModel(
-    private val storyDatabase: StoryDatabase,
-    private val apiService: ApiService
-) : ViewModel() {
+//class MainViewModel(
+//    private val storyDatabase: StoryDatabase,
+//    private val apiService: ApiService
+//) : ViewModel() {
 
 //    companion object{
 //        private const val TAG = "MainViewModel"
@@ -65,44 +65,50 @@ class MainViewModel(
 //        return listStories
 //    }
 
-    val story: LiveData<PagingData<StoryResponseItem>> by lazy{
-        getData().cachedIn(viewModelScope)
-    }
-
-    private fun getData(): LiveData<PagingData<StoryResponseItem>>{
-        @OptIn(ExperimentalPagingApi::class)
-        return Pager(
-            config = PagingConfig(pageSize = 20),
-            pagingSourceFactory = {
-                storyDatabase.storyDao().getAllStory()
-            },
-            remoteMediator = StoryRemoteMediator(storyDatabase, apiService)
-        ).liveData
-    }
-}
-
-class ViewModelFactory(private val storyDatabase: StoryDatabase, private val apiService: ApiService) : ViewModelProvider.NewInstanceFactory() {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
-            return MainViewModel(storyDatabase, apiService) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
-    }
-}
-
-//class MainViewModel(storyRepository: StoryRepository) : ViewModel() {
+//    val story: LiveData<PagingData<StoryResponseItem>> by lazy{
+//        getData().cachedIn(viewModelScope)
+//    }
 //
-//    val story: LiveData<PagingData<StoryResponseItem>> =
-//        storyRepository.getStory().cachedIn(viewModelScope)
-//
+//    private fun getData(): LiveData<PagingData<StoryResponseItem>>{
+//        @OptIn(ExperimentalPagingApi::class)
+//        return Pager(
+//            config = PagingConfig(pageSize = 20),
+//            pagingSourceFactory = {
+//                storyDatabase.storyDao().getAllStory()
+//            },
+//            remoteMediator = StoryRemoteMediator(storyDatabase, apiService)
+//        ).liveData
+//    }
 //}
-//
-//class ViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
+
+//class ViewModelFactory(private val storyDatabase: StoryDatabase, private val apiService: ApiService) : ViewModelProvider.NewInstanceFactory() {
 //    override fun <T : ViewModel> create(modelClass: Class<T>): T {
 //        if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
-//            @Suppress("UNCHECKED_CAST")
-//            return MainViewModel(Injection.provideRepository(context)) as T
+//            return MainViewModel(storyDatabase, apiService) as T
 //        }
 //        throw IllegalArgumentException("Unknown ViewModel class")
 //    }
 //}
+
+class MainViewModel(storyRepository: StoryRepository) : ViewModel() {
+
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
+
+    private val _message = MutableLiveData<String>()
+    val message: LiveData<String> = _message
+
+    val story: LiveData<PagingData<StoryResponseItem>> =
+        storyRepository.getStory().cachedIn(viewModelScope)
+
+}
+
+class ViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return MainViewModel(Injection.provideRepository(context)) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
+    }
+}

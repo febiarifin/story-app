@@ -1,9 +1,12 @@
 package com.febiarifin.storyappsubmissiondicoding.ui.maps
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.Resources
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -11,18 +14,24 @@ import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.febiarifin.storyappsubmissiondicoding.R
 import com.febiarifin.storyappsubmissiondicoding.databinding.ActivityMapsBinding
+import com.febiarifin.storyappsubmissiondicoding.ui.main.MainActivity
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
+
+    companion object{
+        const val TAG = "MapsActivity"
+    }
 
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
@@ -59,6 +68,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         getMyLocation()
         addStoryMarker()
+        setMapStyle()
     }
 
     private val requestPermissionLauncher =
@@ -84,6 +94,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
+        startActivity(Intent(this, MainActivity::class.java))
+        finish()
         return true
     }
 
@@ -127,5 +139,17 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 }
             }
         })
+    }
+
+    private fun setMapStyle(){
+        try {
+            val success =
+                mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.map_style))
+            if (!success) {
+                Log.e(TAG, "Style parsing failed.")
+            }
+        } catch (exception: Resources.NotFoundException) {
+            Log.e(TAG, "Can't find style. Error: ", exception)
+        }
     }
 }

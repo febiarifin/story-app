@@ -1,12 +1,12 @@
 package com.febiarifin.storyappsubmissiondicoding.data
 
-import com.febiarifin.storyappsubmissiondicoding.data.model.Story
+import com.febiarifin.storyappsubmissiondicoding.data.response.StoryResponseItem
 import com.google.gson.annotations.SerializedName
 
 data class StoryResponse(
 
     @field:SerializedName("listStory")
-    val listStories: ArrayList<Story>,
+    val listStories: List<StoryResponseItem>,
 
     @field:SerializedName("error")
     val error: Boolean? = null,

@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import com.febiarifin.storyappsubmissiondicoding.api.ApiConfig
 import com.febiarifin.storyappsubmissiondicoding.data.StoryResponse
 import com.febiarifin.storyappsubmissiondicoding.data.model.Story
+import com.febiarifin.storyappsubmissiondicoding.data.response.StoryResponseItem
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -21,7 +22,7 @@ class MapsViewModel: ViewModel() {
         private const val LOCATION_OF_STORY = 1
     }
 
-    val listStories = MutableLiveData<ArrayList<Story>>()
+    val listStories = MutableLiveData<List<StoryResponseItem>>()
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
@@ -57,7 +58,7 @@ class MapsViewModel: ViewModel() {
         })
     }
 
-    fun getStories(): LiveData<ArrayList<Story>> {
+    fun getStories(): LiveData<List<StoryResponseItem>> {
         return listStories
     }
 }

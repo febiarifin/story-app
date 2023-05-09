@@ -1,5 +1,6 @@
 package com.febiarifin.storyappsubmissiondicoding.ui.detail
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -7,6 +8,8 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.febiarifin.storyappsubmissiondicoding.databinding.ActivityDetailBinding
+import com.febiarifin.storyappsubmissiondicoding.ui.auth.login.LoginActivity
+import com.febiarifin.storyappsubmissiondicoding.ui.main.MainActivity
 
 class DetailActivity : AppCompatActivity() {
 
@@ -57,6 +60,8 @@ class DetailActivity : AppCompatActivity() {
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
+        startActivity(Intent(this, MainActivity::class.java))
+        finish()
         return true
     }
 

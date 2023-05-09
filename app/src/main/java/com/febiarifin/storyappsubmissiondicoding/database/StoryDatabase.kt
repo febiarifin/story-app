@@ -7,14 +7,15 @@ import androidx.room.RoomDatabase
 import com.febiarifin.storyappsubmissiondicoding.data.response.StoryResponseItem
 
 @Database(
-    entities = [StoryResponseItem::class],
-    version = 1,
+    entities = [StoryResponseItem::class, RemoteKeys::class],
+    version = 2,
     exportSchema = false
 )
 
 abstract class StoryDatabase: RoomDatabase() {
 
     abstract fun storyDao(): StoryDao
+    abstract fun remoteKeysDao(): RemoteKeysDao
 
     companion object{
         @Volatile
